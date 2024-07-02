@@ -1,0 +1,21 @@
+<div class="contentview-component" [ngStyle]="contentStyles">
+
+    <div>
+        scroll script here
+    </div>
+
+    <div *ngIf="userShows" class="allPosters">
+        <div *ngFor="let show of userShows" class="poster_x">
+            <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <p>{{show.show_name}} </p>
+            <div class="watchedEp">
+                {{show.watched}}
+            </div>
+            <mat-progress-bar mode="determinate" [value]="show.watched/show.total_episodes*100"
+                color="primary"></mat-progress-bar>
+        </div>
+    </div>
+    <div *ngIf="userShows.length === 0">
+        <p>No shows found for User.</p>
+    </div>
+</div>

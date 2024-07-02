@@ -1,0 +1,58 @@
+<div class="login-container">
+    <div *ngIf="isLogin">
+        <h2>Login</h2>
+        <form (ngSubmit)="onSubmitLogin()" [formGroup]="loginForm">
+            <mat-form-field>
+                <mat-label>Email:</mat-label>
+                <input matInput type="email" formControlName="email">
+                <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+                <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Password:</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+                <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 7 characters</mat-error>
+            </mat-form-field>
+
+            <button type="submit" [disabled]="loginForm.invalid" mat-raised-button><span>Login</span></button>
+        </form>
+        <span>Don't have an account? <button type="button" (click)="toggleMode()">Sign Up</button></span>
+    </div>
+
+    <div *ngIf="!isLogin">
+        <h2>Sign Up</h2>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmitSignup()">
+            <mat-form-field>
+                <mat-label>Full Name</mat-label>
+                <input matInput placeholder="Ex. Jon" formControlName="name">
+                <mat-error *ngIf="signupForm.get('name')?.hasError('required')">Name is required</mat-error>
+                <mat-error *ngIf="signupForm.get('name')?.hasError('minlength')">Name must be at least 5 characters</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="johndoe@gmail.com" formControlName="email">
+                <mat-error *ngIf="signupForm.get('email')?.hasError('required')">Email is required</mat-error>
+                <mat-error *ngIf="signupForm.get('email')?.hasError('email')">Invalid email format</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error *ngIf="signupForm.get('password')?.hasError('required')">Password is required</mat-error>
+                <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">Password must be at least 7 characters</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Confirm Password:</mat-label>
+                <input matInput type="password" formControlName="cpassword">
+                <mat-error *ngIf="signupForm.get('cpassword')?.hasError('passwordMismatch') && signupForm.get('cpassword')?.touched">Passwords do not match</mat-error>
+            </mat-form-field>
+
+            <button type="submit" [disabled]="signupForm.invalid" mat-raised-button><span>Sign Up</span></button>
+        </form>
+        <span>Already have an account? <button type="button" (click)="toggleMode()">Go Back</button></span>
+    </div>
+</div>

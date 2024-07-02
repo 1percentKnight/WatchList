@@ -1,0 +1,81 @@
+<div class="dashboard-component">
+    <div class="category">
+        <button>English</button>
+        <button>Hindi</button>
+        <button>Japanese</button>
+        <button>Other</button>
+    </div>
+
+    <div class="formDiv">
+        <form [formGroup]="formGroup" (ngSubmit)="submitForm()" (keydown.enter)="submitForm()" id="formGroup">
+            <select formControlName="selectedOption">
+                <option *ngFor="let option of dropdownOptions" [value]="option.id">{{option.value}}</option>
+            </select>
+
+            <div class="input">
+                <label for="searchValue"></label>
+                <input formControlName="searchValue" id="searchValue" name="searchValue" type="text"
+                    placeholder="Search ID..." required>
+
+                <!-- Validation messages -->
+
+                <div id="validationMsg"
+                    *ngIf="formGroup.controls['searchValue'].invalid && (formGroup.controls['searchValue'].touched || formGroup.controls['searchValue'].dirty)">
+                    <mat-error *ngIf="formGroup.controls['searchValue']?.errors?.['required']">* Search cannot be
+                        empty</mat-error>
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <mat-icon (click)="formGroup.valid && submitForm()">search</mat-icon>
+        </form>
+    </div>
+</div>
+
+<mat-progress-bar *ngIf="caValue.length>0" mode="indeterminate"></mat-progress-bar>
+<div *ngIf="showData" class="showData">
+
+    <div id="firstCol">
+        <img [src]="showData.poster_url" alt="img not found">
+    </div>
+
+    <div id="verticalLine"></div>
+
+    <div id="secondCol">
+        <p>{{ showData.show_name }}</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Release Date:</td>
+                    <td>{{ showData.release_date }}</td>
+                </tr>
+                <tr>
+                    <td>End Date:</td>
+                    <td>{{ showData.end_date }}</td>
+                </tr>
+                <tr>
+                    <td>IMDb Rating:</td>
+                    <td>{{ showData.imdb_rating }}⭐/10 </td>
+                    <!-- <mat-icon>grade</mat-icon> -->
+                </tr>
+                <tr>
+                    <td>Total EPs:</td>
+                    <td>{{ showData.total_episodes }}</td>
+                </tr>
+                <tr>
+                    <td>Language:</td>
+                    <td>{{showData.languages[0]}}</td>
+                </tr>
+                <tr>
+                    <!-- <td colspan="2" id="genre"><strong>Genre: </strong> <span> {{ showData.genres.join(', ') }}</span> -->
+                    <td>Genre:</td>
+                    <td>{{ showData.genres[0]}} </td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="addButton">
+            <button class="dbButt" (click)="closeAddDB()">Close</button>
+            <button class="dbButt" (click)="addShowtoDB()">Add to DB</button>
+        </div>
+    </div>
+</div>

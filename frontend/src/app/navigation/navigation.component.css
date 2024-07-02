@@ -1,0 +1,26 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: fit-content;
+
+    a {
+        text-decoration: none;
+        color: var(--theme-color-1);
+
+        .active-link {
+            color: var(--theme-color-2);
+        }
+    }
+
+    .navlinks {
+        a {
+            padding: 0 15px;
+        }
+    }
+
+    .profileacc {
+        display: flex;
+        align-items: center;
+    }
+}

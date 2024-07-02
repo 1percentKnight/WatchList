@@ -1,0 +1,18 @@
+.app-component{
+    height: 100%;
+    width: 100%;
+}
+
+#cornerAction {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+app-dashboard {
+    z-index: 2;
+    position: relative;
+}
+app-content-view {
+    z-index: 1;
+    position: relative;
+}

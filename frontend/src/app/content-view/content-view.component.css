@@ -1,0 +1,59 @@
+.allPosters {
+    display: flex;
+    justify-content: space-evenly;
+    
+    .poster_x {
+        position: relative;
+        /* border: 1px solid white; */
+        /* border: 1px solid white; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 8px;
+        background-color: black;
+        color: white;
+
+        img {
+            margin: 8px;
+            border: 1px solid var(--theme-color-2);
+            height: 320px;
+            width: 240px;
+        }
+
+        mat-progress-bar {
+            width: 90%
+        }
+
+        .mat-mdc-progress-bar.mat-primary {
+            --mdc-linear-progress-active-indicator-color: #00ff26;
+            --mdc-linear-progress-active-indicator-height: 8px !important;
+            --mdc-linear-progress-track-height: 6px !important;
+            border-radius: 4px !important;
+        }
+
+        ::ng-deep .mat-mdc-progress-bar.mat-primary .mdc-linear-progress__buffer-bar {
+            background: red;
+        }
+
+        .watchedEp {
+            justify-content: center;
+            align-items: center;
+            height: 28px;
+            width: 28px;
+            display: flex;
+            position: absolute;
+            right: 16px;
+            bottom: 64px;
+            background-color: white;
+            opacity: 1;
+            color: black;
+            border-radius: 20px;
+        }
+
+        p{
+            font-size: 20px;
+            margin: -40 0 4px 0;
+        }
+    }
+
+}
