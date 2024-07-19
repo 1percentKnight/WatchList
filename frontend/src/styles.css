@@ -1,31 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-    --theme-color-1: #000000;
-    --theme-color-2: #ffffff;
-    --theme-color-3: #823d3d;
-    --theme-color-4: #FF6A3D;
-    --theme-color-5: #ffffff;
-}
-
-
-html,
-body {
-    height: 100%;
-    color: var(--theme-color-1);
-    background-color: var(--theme-color-5);
-}
-
-body {
-    margin: 10px;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    --theme-color1: #000000;
+    --theme-color2: #030f28;
+    --theme-color3: #00476d;
+    --theme-color4: #cc5500;
+    --theme-color5: #ab0000;
+    --theme-white: #ffffff;
 }
 
 html,
 body {
     height: 100%;
+    background-color: var(--theme-color1);
+    color: var(--theme-white);
 }
 
 body {
-    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    width: 100%;
+    margin: auto;
+}
+
+app-root {
+    height: 100%;
 }

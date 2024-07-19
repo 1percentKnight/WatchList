@@ -5,8 +5,7 @@
   "scripts": {
     "start:angular": "cd ../frontend && ng serve --host 192.168.1.12",
     "start:server": "nodemon server.js",
-    "start:scraper": "nodemon scraper.js",
-    "start": "npm-run-all -p start:server start:scraper start:angular"
+    "start": "npm-run-all -p start:server start:angular"
   },
   "keywords": [],
   "author": "",

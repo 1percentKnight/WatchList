@@ -1,0 +1,52 @@
+<app-dashboard></app-dashboard>
+
+<div class="explore-component">
+    <h2>English</h2>
+    <div class="english">
+        <div *ngFor="let show of eShows" class="poster_x">
+            <p>{{show.show_name}} </p>
+            <div class="row_2">
+                <span>{{show.release_date}} - {{show.end_date}}</span>
+                <span>{{show.imdb_rating}}/10</span>
+            </div>
+            <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <p>{{show.genres?.join(' | ')}}</p>
+        </div>
+    </div>
+    <h2>Hindi</h2>
+    <div class="hindi">
+        <div *ngFor="let show of hShows" class="poster_x">
+            <p>{{show.show_name}} </p>
+            <div>
+                <span>{{show.release_date}} - {{show.end_date}}</span>
+                <span>{{show.imdb_rating}}/10</span>
+            </div>
+            <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <p>{{show.genres?.join(' | ')}}</p>
+        </div>
+    </div>
+    <h2>Japanese</h2>
+    <div class="japanese">
+        <div *ngFor="let show of jShows" class="poster_x">
+            <p>{{show.show_name}} </p>
+            <div>
+                <span>{{show.release_date}} - {{show.end_date}}</span>
+                <span>{{show.imdb_rating}}/10</span>
+            </div>
+            <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <p>{{show.genres?.join(' | ')}}</p>
+        </div>
+    </div>
+    <h2>Misc</h2>
+    <div class="misc">
+        <div *ngFor="let show of miscShows" class="poster_x">
+            <p>{{show.show_name}} </p>
+            <div>
+                <span>{{show.release_date}} - {{show.end_date}}</span>
+                <span>{{show.imdb_rating}}/10</span>
+            </div>
+            <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <p>{{show.genres?.join(' | ')}}</p>
+        </div>
+    </div>
+</div>

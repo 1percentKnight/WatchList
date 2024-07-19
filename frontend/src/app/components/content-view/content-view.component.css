@@ -1,3 +1,11 @@
+.contentview-component {
+    /* background-color: var(--theme-color2); */
+    color: var(--theme-white);
+    /* height: 100%; */
+    width: 100%;
+    overflow-y: visible;
+}
+
 .allPosters {
     display: flex;
     justify-content: space-evenly;
@@ -11,11 +19,11 @@
         align-items: center;
         padding-bottom: 8px;
         background-color: black;
-        color: white;
+        color: var(--theme-white);
 
         img {
             margin: 8px;
-            border: 1px solid var(--theme-color-2);
+            border: 1px solid var(--theme-color2);
             height: 320px;
             width: 240px;
         }

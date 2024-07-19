@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  caValue: string = "";
+  isDivOpen: boolean = false;
 
+  receivedData(data: string | boolean) {
+    if (typeof data === 'string') {
+      console.log("Received string data: ", data);
+      this.caValue = data;
+    } else if (typeof data === 'boolean') {
+      console.log("Received boolean data: ", data);
+      this.isDivOpen = data;
+    }
+  }
 }

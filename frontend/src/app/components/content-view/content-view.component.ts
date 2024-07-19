@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges, viewChildren } from '@angular/core';
-import { allShow, userShow } from '../models/Show';
-import { dbConnectionService } from '../services/dbConnection.service';
+import { allShow, userShow } from '../../models/Show';
+import { dbConnectionService } from '../../services/dbConnection.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-content-view',
@@ -10,14 +11,13 @@ import { dbConnectionService } from '../services/dbConnection.service';
 export class ContentViewComponent implements OnInit {
 
     userShows: any[] = [];
-    constructor(private showService: dbConnectionService) {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit(): void {
-        this.showService.getShowsByUserId(this.userId).subscribe(
+        this.userService.getUserData().subscribe(
             shows => {
                 this.userShows = shows;
-                // console.log(this.allShows);
             },
             error => console.error("Error fetching all shows", error)
         );
@@ -38,6 +38,4 @@ export class ContentViewComponent implements OnInit {
             'margin-top': '0'
         };
     }
-
-    userId: number = 1;
 }

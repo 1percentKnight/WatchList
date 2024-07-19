@@ -1,5 +1,7 @@
-<app-navigation></app-navigation>
-<app-dashboard></app-dashboard>
-<app-content-view></app-content-view>
-
-<app-data></app-data>
+<app-dashboard (dataEmitter)="receivedData($event)" (isDivOpen)="receivedData($event)"></app-dashboard>
+<div class="home-component">
+    <app-content-view></app-content-view>
+    <router-outlet>
+        <span *ngIf="caValue" id="cornerAction">{{caValue}}</span>
+    </router-outlet>
+</div>

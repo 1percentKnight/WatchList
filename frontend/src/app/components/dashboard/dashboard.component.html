@@ -1,11 +1,21 @@
-<div class="dashboard-component">
-    <div class="category">
-        <button>English</button>
-        <button>Hindi</button>
-        <button>Japanese</button>
-        <button>Other</button>
-    </div>
+<mat-toolbar>
+    <span (click)="toggleMenu()">
+        <span *ngIf="menuOpen" class="material-symbols-outlined"> menu </span>
+        <span *ngIf="!menuOpen" class="material-symbols-outlined"> menu_open </span>
+        <span> KWL </span>
+    </span>
+    <span class="navlinks">
+        <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+        <a routerLink="/explore" routerLinkActive="active" ariaCurrentWhenActive="page">Explore</a>
+        <a routerLink="/watchlist" routerLinkActive="active" ariaCurrentWhenActive="page">WatchList</a>
+    </span>
+    <span>
+        <span class="material-symbols-outlined"> account_circle </span>
+        <span class="material-symbols-outlined"> logout </span>
+    </span>
+</mat-toolbar>
 
+<div class="dashboard-component">
     <div class="formDiv">
         <form [formGroup]="formGroup" (ngSubmit)="submitForm()" (keydown.enter)="submitForm()" id="formGroup">
             <select formControlName="selectedOption">
@@ -15,31 +25,27 @@
             <div class="input">
                 <label for="searchValue"></label>
                 <input formControlName="searchValue" id="searchValue" name="searchValue" type="text"
-                    placeholder="Search ID..." required>
+                    placeholder="Search..." required>
 
                 <!-- Validation messages -->
-
                 <div id="validationMsg"
                     *ngIf="formGroup.controls['searchValue'].invalid && (formGroup.controls['searchValue'].touched || formGroup.controls['searchValue'].dirty)">
                     <mat-error *ngIf="formGroup.controls['searchValue']?.errors?.['required']">* Search cannot be
                         empty</mat-error>
                 </div>
             </div>
-
             <!-- Submit button -->
             <mat-icon (click)="formGroup.valid && submitForm()">search</mat-icon>
         </form>
     </div>
 </div>
 
-<mat-progress-bar *ngIf="caValue.length>0" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar *ngIf="caValue.length > 0" mode="indeterminate"></mat-progress-bar>
 <div *ngIf="showData" class="showData">
 
     <div id="firstCol">
         <img [src]="showData.poster_url" alt="img not found">
     </div>
-
-    <div id="verticalLine"></div>
 
     <div id="secondCol">
         <p>{{ showData.show_name }}</p>
@@ -56,7 +62,10 @@
                 <tr>
                     <td>IMDb Rating:</td>
                     <td>{{ showData.imdb_rating }}⭐/10 </td>
-                    <!-- <mat-icon>grade</mat-icon> -->
+                </tr>
+                <tr>
+                    <td>Duration:</td>
+                    <td>{{ showData.duration }}</td>
                 </tr>
                 <tr>
                     <td>Total EPs:</td>
@@ -67,7 +76,6 @@
                     <td>{{showData.languages[0]}}</td>
                 </tr>
                 <tr>
-                    <!-- <td colspan="2" id="genre"><strong>Genre: </strong> <span> {{ showData.genres.join(', ') }}</span> -->
                     <td>Genre:</td>
                     <td>{{ showData.genres[0]}} </td>
                 </tr>

@@ -29,6 +29,7 @@ def scrape_imdb_show(id):
     genres = []
     languages = []
     total_episodes = 1
+    duration = None
     poster_url = None
 
     if meta_title_tag:
@@ -59,8 +60,6 @@ def scrape_imdb_show(id):
     # Extract languages
     language_tags = soup.find_all('a', href=re.compile(r'/search/title\?title_type=feature&primary_language='))
     languages = [tag.get_text(strip=True) for tag in language_tags]
-    # print(language_tags)
-    # print(languages)
 
     # Extract total episodes
     episodes_span = soup.find('span', text='Episodes')
@@ -68,6 +67,11 @@ def scrape_imdb_show(id):
         total_episodes = episodes_span.find_next('span', class_='ipc-title__subtext')
         if total_episodes:
             total_episodes = total_episodes.get_text(strip=True)
+    
+    # Extract duration length
+    duration_tag = soup.find_next('meta', property='og:description')
+    if duration_tag:
+        duration = duration_tag.get('content', '').strip()
 
     # Extract poster URL
     if meta_image_tag:
@@ -82,10 +86,10 @@ def scrape_imdb_show(id):
         'genres': genres,
         'languages': languages,
         'total_episodes': total_episodes,
+        'duration': duration,
         'poster_url': poster_url,
     }
 
-    # Save result to JSON file
     output_dir = os.path.join(os.path.dirname(__file__), 'output')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -94,8 +98,53 @@ def scrape_imdb_show(id):
     with open(file_path, 'w') as file_location:
         json.dump(result, file_location, indent=4)
 
+def search_imdb(input):
+    url = f'https://www.imdb.com/find/?s=tt&q={input}'
+    print("Input id is :" + input)
+    print("Search url is: " + url)
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                      '(KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+
+    response = requests.get(url, headers=headers)
+    if response.status_code != 200:
+        print(f'Failed to fetch IMDb page for URL: {url}')
+        return
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    a_tag = soup.find('a', class_='ipc-metadata-list-summary-item__t')
+    if a_tag:
+        href = a_tag.get('href')
+        if href:
+            imdb_id = href.split('/title/')[1].split('/')[0]
+            return imdb_id
+
+        else:
+            print("href attribute not found")
+    else:
+        print("a tag not found")
+
+#  Main
 if __name__ == "__main__":
-    imdb_url = sys.argv[1]
-    imdb_id = imdb_url.split('/')[-1]  # Extract IMDb ID from URL
-    print("the argument is: " + imdb_id)
-    scrape_imdb_show(imdb_id)
+    input = sys.argv[1]
+    print(input)
+    if input.startswith("http"):
+        print("Input is a URL.")
+                
+        # Find all matches in the URL
+        matches = re.findall(r'tt\d{7,8}', input)
+        id = matches[0]
+
+    elif input.startswith("tt") and len(input) == 9:
+        print("Input is an IMDb ID.")
+        id = input
+
+    else:
+        print("Input is a search query.")        
+        id = search_imdb(input)
+
+    url = f'https://www.imdb.com/title/{id}'
+    print(url)
+
+    scrape_imdb_show(id)

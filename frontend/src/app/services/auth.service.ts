@@ -1,33 +1,36 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:3000/api/auth';
 
-    constructor(private http: HttpClient) { }
+  router = inject(Router);
+  http = inject(HttpClient);
 
-    signup(userData: any): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}/signup`, userData);
+  private apiUrl = 'http://192.168.1.12:3000/dBCon';
+
+  login(loginData: any): Observable<any> {
+    console.log("Received login data in auth service:", loginData);
+    return this.http.post<any>(`${this.apiUrl}/login`, loginData);
+  }
+
+  getToken(): string | null {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('authToken');
     }
+    return null;
+  }
 
-    login(credentials: any): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}/login`, credentials);
-    }
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
 
-    logout(): void {
-        localStorage.removeItem('token');
-    }
-
-    getToken(): string | null {
-        return localStorage.getItem('token');
-    }
-
-    isAuthenticated(): boolean {
-        return !!this.getToken();
-    }
+  logout() {
+    localStorage.removeItem('authToken');
+    this.router.navigateByUrl('/login');
+  }
 }

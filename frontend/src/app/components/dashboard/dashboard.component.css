@@ -1,10 +1,43 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    height: fit-content;
+    background-color: var(--theme-color2);
+    color: var(--theme-white);
+
+    a {
+        text-decoration: none;
+        color: var(--theme-white);
+
+    }
+    a.active {
+        color: var(--theme-color4);
+        border: 1px solid var(--theme-color2);
+    }
+    .navlinks {
+        a {
+            padding: 0 16px;
+        }
+    }
+
+    .profileacc {
+        display: flex;
+        align-items: center;
+    }
+    span {
+        display: flex;
+        align-items: center;
+    }
+}
+
 button {
     width: 100px;
     height: 32px;
     font-size: 16px;
-    color: var(--theme-color-2);
+    color: var(--theme-white);
     background-color: transparent;
-    border: 1px solid var(--theme-color-2);
+    border: 1px solid var(--theme-white);
     border-radius: 0  16px 0 16px;
     transition: 0.3s ease-in-out;
     padding: 4px 12px;
@@ -12,16 +45,16 @@ button {
     &:hover {
         font-weight: bolder;
         background-color: white;
-        color: var(--theme-color-1);
+        color: var(--theme-color1);
     }
 }
 
 .dashboard-component {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
-    background-color: var(--theme-color-1);
-    color: var(--theme-color-2);
+    background-color: var(--theme-color2);
+    color: var(--theme-color2);
     padding: 8px 0 8px 8px;
 
     .category {
@@ -45,7 +78,7 @@ button {
     select,
     select.ng-valid {
         background-color: transparent;
-        color: var(--theme-color-2);
+        color: var(--theme-white);
         height: 24px;
         padding: 0;
         font-weight: bold;
@@ -55,8 +88,7 @@ button {
         width: min-content;
 
         option {
-            background-color: var(--theme-color-1);
-            font-weight: bold;
+            background-color: var(--theme-color2);
         }
     }
 
@@ -73,7 +105,7 @@ button {
         }
     }
 
-    mat-icon {
+    .material-symbols-outlined {
         padding: 0 8px;
         transition: transform .5s ease-in-out;
 
@@ -120,7 +152,7 @@ button {
         justify-content: center;
 
         img {
-            border: 1px solid var(--theme-color-2);
+            border: 1px solid var(--theme-color2);
             max-width: 95%;
             max-height: 95%;
             /* margin: 0 12px; */
@@ -128,7 +160,7 @@ button {
     }
 
     #verticalLine {
-        border-left: 1px solid var(--theme-color-1);
+        border-left: 1px solid var(--theme-color1);
     }
 
     #secondCol {
@@ -184,14 +216,14 @@ button {
         
         .dbButt {
             width: 120px;
-            color: var(--theme-color-2);
-            border: 1px solid var(--theme-color-2);
+            color: var(--theme-color2);
+            border: 1px solid var(--theme-color2);
             margin-top: 5px;
 
             &:hover {
                 font-weight: bolder;
-                background-color: var(--theme-color-2);
-                color: var(--theme-color-1);
+                background-color: var(--theme-color2);
+                color: var(--theme-color1);
             }
         }
     }

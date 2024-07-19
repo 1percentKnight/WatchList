@@ -1,7 +1,6 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ScraperService } from '../services/python.service';
-import { dbConnectionService } from '../services/dbConnection.service';
+import { dbConnectionService } from '../../services/dbConnection.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -14,7 +13,7 @@ export class DashboardComponent {
 
 
     dropdownOptions: any[] = [
-        { id: 1, value: ":Search Page" },
+        { id: 1, value: ":Search" },
         { id: 2, value: ":Add Entry" },
         { id: 3, value: ":Add To DB" }
     ];
@@ -24,7 +23,7 @@ export class DashboardComponent {
     caValue: string = "";
     searchValue: string = "";
 
-    constructor(private scraperService: ScraperService, private showService: dbConnectionService, private fb: FormBuilder) {
+    constructor(private dbConnectionService: dbConnectionService, private fb: FormBuilder) {
         this.formGroup = this.fb.group({
             selectedOption: new FormControl(this.dropdownOptions[0].id.toString()),
             searchValue: new FormControl('', [Validators.required])
@@ -36,7 +35,7 @@ export class DashboardComponent {
     }
 
     tempRunner() {
-        this.showService.getShowByShowId("tt1375666").subscribe(
+        this.dbConnectionService.getShowByShowId("tt1375666").subscribe(
             data => {
                 this.showData = data;
             },
@@ -74,7 +73,7 @@ export class DashboardComponent {
 
     addShowforUser() {
         console.log("Add Entry Logic");
-        
+
     }
 
     scrapeShow() {
@@ -85,10 +84,13 @@ export class DashboardComponent {
 
         this.caValue = "Searching, please wait...";
         this.sendData();
-
-        this.scraperService.scrapeShow(this.searchValue).subscribe(
+        console.log("caValue is: ", this.caValue);
+                
+        this.searchValue = this.searchValue.replaceAll(" ", "%20").toLowerCase();
+        this.dbConnectionService.scrapeShow(this.searchValue).subscribe(
             data => {
                 this.showData = data;
+                console.log("Received showData:", this.showData);
                 this.isDivOpen.emit(true);
                 this.caValue = "";
                 this.sendData();
@@ -105,16 +107,14 @@ export class DashboardComponent {
     }
 
     addShowtoDB() {
-        const showWithId = { ...this.showData, id: this.searchValue };
-
-        this.showService.addShowtoDB(showWithId).subscribe(
+        this.dbConnectionService.addShowtoDB(this.showData).subscribe(
             response => {
                 console.log(response);
                 alert('Show added to the database');
             },
             error => {
                 console.error('Error adding show:', error);
-                alert('Failed to add show since the ID already exists!');
+                alert('Failed to add show, check if the ID already exists!');
             }
         );
     }
@@ -126,5 +126,10 @@ export class DashboardComponent {
     closeAddDB() {
         this.showData = null;
         this.isDivOpen.emit(false);
+    }
+
+    menuOpen = true;
+    toggleMenu() {
+        this.menuOpen = !this.menuOpen;
     }
 }

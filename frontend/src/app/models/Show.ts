@@ -3,10 +3,12 @@ export interface allShow {
   show_name: string;
   release_date: string;
   end_date?: string;
-  poster_url?: string;
   imdb_rating?: number;
   genres?: string[];
+  languages?: string[];
   total_episodes?: number;
+  poster_url?: string;
+  duration?: string;
 }
 
 export interface userShow {
