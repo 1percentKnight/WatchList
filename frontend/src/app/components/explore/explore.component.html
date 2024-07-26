@@ -10,6 +10,7 @@
                 <span>{{show.imdb_rating}}/10</span>
             </div>
             <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <span (click)="addtoWatchList(show.show_id)" class="material-symbols-outlined"> add_circle </span>
             <p>{{show.genres?.join(' | ')}}</p>
         </div>
     </div>
@@ -17,11 +18,12 @@
     <div class="hindi">
         <div *ngFor="let show of hShows" class="poster_x">
             <p>{{show.show_name}} </p>
-            <div>
+            <div class="row_2">
                 <span>{{show.release_date}} - {{show.end_date}}</span>
                 <span>{{show.imdb_rating}}/10</span>
             </div>
             <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <span (click)="addtoWatchList(show.show_id)" class="material-symbols-outlined"> add_circle </span>
             <p>{{show.genres?.join(' | ')}}</p>
         </div>
     </div>
@@ -29,11 +31,12 @@
     <div class="japanese">
         <div *ngFor="let show of jShows" class="poster_x">
             <p>{{show.show_name}} </p>
-            <div>
+            <div class="row_2">
                 <span>{{show.release_date}} - {{show.end_date}}</span>
                 <span>{{show.imdb_rating}}/10</span>
             </div>
             <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <span (click)="addtoWatchList(show.show_id)" class="material-symbols-outlined"> add_circle </span>
             <p>{{show.genres?.join(' | ')}}</p>
         </div>
     </div>
@@ -41,11 +44,12 @@
     <div class="misc">
         <div *ngFor="let show of miscShows" class="poster_x">
             <p>{{show.show_name}} </p>
-            <div>
+            <div class="row_2">
                 <span>{{show.release_date}} - {{show.end_date}}</span>
                 <span>{{show.imdb_rating}}/10</span>
             </div>
             <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+            <span (click)="addtoWatchList(show.show_id)" class="material-symbols-outlined"> add_circle </span>
             <p>{{show.genres?.join(' | ')}}</p>
         </div>
     </div>

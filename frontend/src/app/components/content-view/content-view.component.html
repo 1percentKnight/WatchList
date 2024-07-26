@@ -1,21 +1,42 @@
-<!-- <div class="contentview-component" [ngStyle]="contentStyles"> -->
 <div class="contentview-component">
-    <div>
-        scroll script here
-    </div>
-
-    <div *ngIf="userShows" class="allPosters">
-        <div *ngFor="let show of userShows" class="poster_x">
-            <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
-            <p>{{show.show_name}} </p>
-            <div class="watchedEp">
-                {{show.watched}}
+    <img id="background" [src]="currentImageUrl" alt="Background Image">
+    <div class="right">
+        <div *ngIf="randShows" class="allPosters">
+            <div *ngFor="let show of randShows; index as posterInd" class="poster_x">
+                <img [src]="show.poster_url" alt="{{ show.show_name }} Poster">
+                <div class="gradient-overlay"></div>
+                <div class="hoverimg" (click)="onImageClick(posterInd)"></div>
+                <span>{{show.show_name}} </span>
+                <div class="watchedEp">
+                    {{show.watched}}
+                </div>
+                <mat-progress-bar mode="determinate" [value]="show.watched/show.total_episodes*100" color="primary"></mat-progress-bar>
             </div>
-            <mat-progress-bar mode="determinate" [value]="show.watched/show.total_episodes*100"
-                color="primary"></mat-progress-bar>
+            <div class="arrows">
+                <button id="prev" (click)="reverseImage()">&lt;</button>
+                <button id="next" (click)="changeImage('next')">&gt;</button>
+            </div>
+        </div>
+
+        <div class="information">
+            <div>
+                <span> {{randShows[currentIndex].show_name}} </span>
+                <span> {{randShows[currentIndex].show_id}} </span>
+            </div>
+            <span>Rating: {{randShows[currentIndex].imdb_rating}}/10</span>
+            <span>Streamed: {{randShows[currentIndex].release_date}} - {{randShows[currentIndex].end_date}}</span>
+            <span>Genres: {{randShows[currentIndex].genres.join(' | ')}}</span>
+            <span>Watched: {{randShows[currentIndex].watched}} / {{randShows[currentIndex].total_episodes}}</span>
+            <span>Episode Duration: {{randShows[currentIndex].duration}}</span>
         </div>
     </div>
-    <div *ngIf="userShows.length === 0">
+
+
+
+
+
+
+    <div *ngIf="randShows.length === 0">
         <p>No shows found for User.</p>
     </div>
 </div>

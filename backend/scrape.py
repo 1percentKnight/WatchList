@@ -69,9 +69,15 @@ def scrape_imdb_show(id):
             total_episodes = total_episodes.get_text(strip=True)
     
     # Extract duration length
-    duration_tag = soup.find_next('meta', property='og:description')
+    duration_tag = soup.find('meta', property='twitter:description')
     if duration_tag:
-        duration = duration_tag.get('content', '').strip()
+        content = duration_tag.get('content', '').strip()
+        if '|' in content:
+            duration, rating = map(str.strip, content.split('|', 1))
+        else:
+            # Handle the case where there is no '|' in the string
+            duration = content.strip()
+            rating = ''  # or some default value
 
     # Extract poster URL
     if meta_image_tag:
@@ -88,6 +94,7 @@ def scrape_imdb_show(id):
         'total_episodes': total_episodes,
         'duration': duration,
         'poster_url': poster_url,
+        'rating': rating
     }
 
     output_dir = os.path.join(os.path.dirname(__file__), 'output')
@@ -100,7 +107,7 @@ def scrape_imdb_show(id):
 
 def search_imdb(input):
     url = f'https://www.imdb.com/find/?s=tt&q={input}'
-    print("Input id is :" + input)
+    print("Input id id: " + input)
     print("Search url is: " + url)
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
@@ -136,7 +143,7 @@ if __name__ == "__main__":
         matches = re.findall(r'tt\d{7,8}', input)
         id = matches[0]
 
-    elif input.startswith("tt") and len(input) == 9:
+    elif input.startswith("tt") and (len(input) == 9 or len(input) == 10):
         print("Input is an IMDb ID.")
         id = input
 

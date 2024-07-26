@@ -9,6 +9,7 @@ export interface allShow {
   total_episodes?: number;
   poster_url?: string;
   duration?: string;
+  rating?: string;
 }
 
 export interface userShow {

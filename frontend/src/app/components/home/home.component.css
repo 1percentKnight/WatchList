@@ -1,6 +1,8 @@
 .home-component{
+    position: relative;
     height: 100%;
-    width: 90%;
+    width: 98%;
+    left: 1%;
 }
 
 #cornerAction {
@@ -11,6 +13,7 @@
 app-dashboard {
     z-index: 2;
     position: relative;
+    display: block;
 }
 app-content-view {
     z-index: 1;

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { dbConnectionService } from '../../services/dbConnection.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-dashboard',
@@ -14,7 +15,6 @@ export class DashboardComponent {
 
     dropdownOptions: any[] = [
         { id: 1, value: ":Search" },
-        { id: 2, value: ":Add Entry" },
         { id: 3, value: ":Add To DB" }
     ];
 
@@ -23,7 +23,7 @@ export class DashboardComponent {
     caValue: string = "";
     searchValue: string = "";
 
-    constructor(private dbConnectionService: dbConnectionService, private fb: FormBuilder) {
+    constructor(private dbConnectionService: dbConnectionService, private fb: FormBuilder, private router: Router) {
         this.formGroup = this.fb.group({
             selectedOption: new FormControl(this.dropdownOptions[0].id.toString()),
             searchValue: new FormControl('', [Validators.required])
@@ -45,49 +45,16 @@ export class DashboardComponent {
         );
     }
 
-    submitForm() {
-        if (this.formGroup.valid) {
-            this.searchValue = this.formGroup.get('searchValue')?.value;
-
-            switch (this.formGroup.get('selectedOption')?.value.toString()) {
-                case '1':
-                    this.searchPage();
-                    break;
-                case '2':
-                    this.addShowforUser();
-                    break;
-                case '3':
-                    this.scrapeShow();
-                    break;
-                default:
-                    console.log("Unhandled selection option");
-            }
-        } else {
-            console.error('Form is invalid!');
-        }
-    }
-
     searchPage() {
         console.log("Search Page Logic");
     }
-
-    addShowforUser() {
-        console.log("Add Entry Logic");
-
-    }
-
+    scrapeInput = "";
     scrapeShow() {
-        if (!this.searchValue) {
-            console.error('IMDb ID is required.');
-            return;
-        }
-
         this.caValue = "Searching, please wait...";
         this.sendData();
-        console.log("caValue is: ", this.caValue);
-                
+
         this.searchValue = this.searchValue.replaceAll(" ", "%20").toLowerCase();
-        this.dbConnectionService.scrapeShow(this.searchValue).subscribe(
+        this.dbConnectionService.scrapeShow(this.scrapeInput).subscribe(
             data => {
                 this.showData = data;
                 console.log("Received showData:", this.showData);
@@ -128,8 +95,13 @@ export class DashboardComponent {
         this.isDivOpen.emit(false);
     }
 
-    menuOpen = true;
+    menuOpen = false;
     toggleMenu() {
         this.menuOpen = !this.menuOpen;
+    }
+
+    logout() {
+        localStorage.removeItem('authToken');
+        this.router.navigateByUrl('/login');
     }
 }

@@ -1,67 +1,192 @@
+/* General styling for the content view component */
+
 .contentview-component {
-    /* background-color: var(--theme-color2); */
     color: var(--theme-white);
-    /* height: 100%; */
+    display: flex;
     width: 100%;
-    overflow-y: visible;
+    height: 100%;
 }
 
+.right {
+    position: relative;
+    height: 100%;
+    width: 60%;
+    margin-left: auto;
+}
+
+/* Styling for the container holding all posters */
 .allPosters {
+    position: relative;
+    height: fit-content;
+    width: 100%;
     display: flex;
-    justify-content: space-evenly;
-    
-    .poster_x {
-        position: relative;
-        /* border: 1px solid white; */
-        /* border: 1px solid white; */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-bottom: 8px;
-        background-color: black;
-        color: var(--theme-white);
+    flex-wrap: wrap;
+    /* Ensure posters wrap if needed */
+    margin-left: auto;
+    gap: 10px;
+    justify-content: end;
+}
 
-        img {
-            margin: 8px;
-            border: 1px solid var(--theme-color2);
-            height: 320px;
-            width: 240px;
-        }
+/* Styling for individual poster containers */
+.poster_x {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Align content to the bottom */
+    align-items: center;
+    height: 250px;
+    width: 150px;
+    color: var(--theme-white);
+    background-color: var(--theme-color2);
+    /* Updated background color */
+    border-radius: 8px;
+    /* Optional: Rounded corners */
+    overflow: hidden;
+    /* Ensure content stays within boundaries */
+}
 
-        mat-progress-bar {
-            width: 90%
-        }
+/* Styling for the images within the poster containers */
+.poster_x img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+    /* Ensures image covers the container */
+}
 
-        .mat-mdc-progress-bar.mat-primary {
-            --mdc-linear-progress-active-indicator-color: #00ff26;
-            --mdc-linear-progress-active-indicator-height: 8px !important;
-            --mdc-linear-progress-track-height: 6px !important;
-            border-radius: 4px !important;
-        }
+.poster_x .gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    /* Adjust height as needed */
+    background: linear-gradient(to top, var(--theme-color1) 40%, transparent);
+    pointer-events: none;
+    /* Ensure it does not interfere with other interactions */
+}
 
-        ::ng-deep .mat-mdc-progress-bar.mat-primary .mdc-linear-progress__buffer-bar {
-            background: red;
-        }
 
-        .watchedEp {
-            justify-content: center;
-            align-items: center;
-            height: 28px;
-            width: 28px;
-            display: flex;
-            position: absolute;
-            right: 16px;
-            bottom: 64px;
-            background-color: white;
-            opacity: 1;
-            color: black;
-            border-radius: 20px;
-        }
+.hoverimg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--theme-color1);
+    transition: opacity 0.5s ease;
+    /* Ensure smooth hover effect */
+    opacity: 0;
+    /* Start hidden */
+}
 
-        p{
-            font-size: 20px;
-            margin: -40 0 4px 0;
-        }
-    }
+.poster_x:hover .hoverimg {
+    /* pointer-events: none; */
+    cursor: pointer;
+    opacity: 0.5;
+    /* Apply hover effect */
+}
 
+/* Styling for the progress bar */
+.poster_x mat-progress-bar {
+    width: 90%;
+    margin: 5px 0;
+    /* Add vertical margin for spacing */
+}
+
+/* Custom styling for the Angular Material progress bar */
+.poster_x .mat-mdc-progress-bar.mat-primary {
+    --mdc-linear-progress-active-indicator-color: rgb(0, 221, 0);
+    /* Updated progress bar color */
+    --mdc-linear-progress-active-indicator-height: 8px !important;
+    --mdc-linear-progress-track-height: 6px !important;
+    border-radius: 4px !important;
+}
+
+/* Deep styling for Angular Material progress bar buffer bar */
+::ng-deep .mat-mdc-progress-bar.mat-primary .mdc-linear-progress__buffer-bar {
+    background: red
+        /* Updated buffer bar color */
+}
+
+/* Styling for the watched episode indicator */
+.poster_x .watchedEp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    /* Adjust for better positioning */
+    background-color: var(--theme-color3);
+    /* Updated background color */
+    color: var(--theme-white);
+    border-radius: 50%;
+    /* Ensure the circle is perfectly round */
+    font-size: 14px;
+    /* Adjust font size as needed */
+}
+
+/* Styling for the show name text */
+.poster_x span {
+    position: absolute;
+    bottom: 20px;
+    left: 5px;
+    z-index: 1;
+    font-size: 16px;
+    width: calc(100% - 10px);
+    /* Adjust width to fit within container */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%; /* Adjust height to the viewport height */
+    width: 35vw;  /* Adjust width to the viewport width or use percentage if needed */
+    object-fit: fill; /* Ensure the image covers the container */
+    overflow: hidden;
+    transition: opacity 0.5s ease-in; /* Adjust transition to opacity for fade effects */
+}
+
+
+#background.fade-out {
+    opacity: 0;
+    transition: opacity .5s ease-in;
+}
+
+.arrows {
+    display: flex;
+    gap: 10px;
+}
+
+.arrows button {
+    background-color: #eee5;
+    border: none;
+    font-family: monospace;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: x-large;
+    color: #eee;
+    transition: .5s;
+}
+
+.arrows button:hover {
+    background-color: #eee;
+    color: black;
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
 }

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { allShow } from '../../models/Show';
 import { dbConnectionService } from '../../services/dbConnection.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-explore',
@@ -16,6 +17,7 @@ export class ExploreComponent implements OnInit {
   miscShows: allShow[] = [];
 
   dbConnection = inject(dbConnectionService)
+  userService = inject(UserService)
 
   ngOnInit() {
     this.dbConnection.getAllShows().subscribe(
@@ -37,5 +39,18 @@ export class ExploreComponent implements OnInit {
       const firstLanguage = show.languages?.[0] || "";
       return !["English", "Hindi", "Japanese"].includes(firstLanguage);
   });
+  }
+
+  addtoWatchList(showId: string) {
+    console.log("Show id is:", showId); 
+    this.userService.addShowforUser(showId).subscribe(
+      result => {
+        console.log("Show added for user successfully");
+        console.log(result);
+      }, error => {
+        console.error("Error occuered during adding show,", error);
+        return;
+      }
+    )
   }
 }

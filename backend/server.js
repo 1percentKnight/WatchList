@@ -25,7 +25,7 @@ function verifyToken(req, res, next) {
     jwt.verify(token.split(' ')[1], process.env.JWT_SECRET_KEY, (err, decoded) => {
         if (err) return res.status(500).json({ error: 'Failed to authenticate token' });
 
-        req.userId = decoded.id; // Assign userId from token payload to req object
+        req.userId = decoded.id;
         next();
     });
 }
@@ -75,7 +75,7 @@ app.post('/dbCon/search', (req, res) => {
 
 app.post('/dbCon/shows', (req, res) => {
     const show = req.body;
-    const insertQuery = 'INSERT INTO showsDetail VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const insertQuery = 'INSERT INTO showsDetail VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     const insertValues = [
         show.show_id,
         show.show_name,
@@ -86,7 +86,8 @@ app.post('/dbCon/shows', (req, res) => {
         JSON.stringify(show.languages),
         show.total_episodes,
         show.poster_url,
-        show.duration
+        show.duration,
+        show.rating
     ];
 
     pool.query(insertQuery, insertValues, (err, results) => {
@@ -157,10 +158,37 @@ app.get('/dbCon/user', verifyToken, (req, res) => {
     });
 });
 
+app.get('/dbCon/randomShow', verifyToken, (req, res) => {
+    const userId = req.userId;
+    pool.query('SELECT * FROM showsDetail INNER JOIN watchedShows ON showsDetail.show_id=watchedShows.showId WHERE userId = ? ORDER BY rand() LIMIT 5', [userId], (error, results) => {
+        if (error) {
+            console.error("Error querying userData for id:", userId, error);
+            return res.status(500).json({ error: 'Database query failed' });
+        }
+        if (results.length === 0) {
+            console.error("Data not found for userId:", userId);
+            return res.status(404).json({ error: 'Data for userId not found' });
+        }
+        res.json(results);
+    });
+});
+
+app.post('/dbCon/user', verifyToken, (req, res) => {
+    const userId = req.userId;
+    const showId = req.body.showId;
+    console.log("Show id in server:", showId);
+    pool.query("INSERT INTO watchedShows VALUES (? , ?, 0)", [userId, showId], (error, results)=> {
+        if (error) {
+            console.error("Error querying for id:", userId, error);
+            return res.status(500).json({ error: 'Database query failed' });
+        }
+        
+        return res.json(results);
+    });
+})
+
 app.post('/dbCon/login', (req, res) => {
     const values = req.body;
-
-    console.log("Checking for email: " + values.email);
 
     pool.query("SELECT user_id, password FROM users WHERE email = ?", [values.email], (error, results) => {
         if (error) {
@@ -184,8 +212,8 @@ app.post('/dbCon/login', (req, res) => {
                 return res.json({ msg: "Invalid Credentials" });
             }
 
-            const token = jwt.sign({ id: userId }, process.env.JWT_SECRET_KEY, { expiresIn: 86400 });
-            console.log("Token generated successfully");
+            const token = jwt.sign({ id: userId }, process.env.JWT_SECRET_KEY, { expiresIn: 3600 });
+            console.log("Token generated successfully for userId: " + userId);
 
             return res.json({ email: values.email, token, msg: "Login Success" });
         });

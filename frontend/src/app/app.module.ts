@@ -23,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { authInterceptor } from './services/auth.interceptor';
 import { AuthGuard } from './services/auth.guard';
+import { WatchlistComponent } from './components/watchlist/watchlist.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuthGuard } from './services/auth.guard';
     ContentViewComponent,
     HomeComponent,
     LoginComponent,
-    ExploreComponent
+    ExploreComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserModule,

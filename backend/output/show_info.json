@@ -1,20 +1,19 @@
 {
-    "show_id": "tt1375666",
-    "show_name": "Inception",
-    "release_date": "2010",
-    "end_date": "2010",
-    "imdb_rating": "8.8",
+    "show_id": "tt15428134",
+    "show_name": "Dunki",
+    "release_date": "2023",
+    "end_date": "2023",
+    "imdb_rating": "6.6",
     "genres": [
         "Action",
         "Adventure",
-        "Sci-Fi"
+        "Comedy"
     ],
     "languages": [
-        "English",
-        "Japanese",
-        "French"
+        "Hindi"
     ],
     "total_episodes": 1,
-    "duration": null,
-    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg"
+    "duration": "2h 40m",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMzQ0NDRhNmItYzllYS00NDdlLTk0YTctZDQ5YmFkYjdkNDcyXkEyXkFqcGdeQXVyNTYwMzA0MTM@._V1_FMjpg_UX1000_.jpg",
+    "rating": "UA"
 }

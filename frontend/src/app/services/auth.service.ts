@@ -8,13 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  router = inject(Router);
   http = inject(HttpClient);
+  router = inject(Router);
 
   private apiUrl = 'http://192.168.1.12:3000/dBCon';
 
   login(loginData: any): Observable<any> {
-    console.log("Received login data in auth service:", loginData);
     return this.http.post<any>(`${this.apiUrl}/login`, loginData);
   }
 
@@ -27,10 +26,5 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!this.getToken();
-  }
-
-  logout() {
-    localStorage.removeItem('authToken');
-    this.router.navigateByUrl('/login');
   }
 }

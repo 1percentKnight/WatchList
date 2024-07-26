@@ -53,12 +53,9 @@ export class LoginComponent {
 
     onSubmitLogin() {
         if (this.loginForm.valid) {
-            console.log(this.loginForm.value);
 
             this.authService.login(this.loginForm.value).subscribe(
                 result => {
-                    console.log(result);
-                    console.log("Login is successful");
                     localStorage.setItem('authToken', result.token);
                     this.userId = result.userId;
                     this.router.navigateByUrl('/home');
